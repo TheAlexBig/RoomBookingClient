@@ -1,0 +1,63 @@
+<h1>{{booking.id == null ? 'Add' : 'Edit'}} Booking</h1>
+
+<form [formGroup]="bookingForm">
+  <div class="row">
+    <div class="form-group col-4">
+      <label for="date">Date</label>
+      <input type="date" class="form-control" id="date" formControlName="bookingDate">
+    </div>
+
+    <div class="form-group col-4">
+      <label for="startTime">Start time</label>
+      <input type="time" step="1" class="form-control" id="startTime" formControlName="bookingStart">
+    </div>
+
+    <div class="form-group col-4">
+      <label for="endTime">End time</label>
+      <input type="time" step="1"  class="form-control" id="endTime" formControlName="bookingEnd">
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="form-group col-5">
+      <label for="room">Room</label>
+      <select class="form-control" id="room" formControlName="bookingRoom">
+        <option *ngFor="let room of rooms" [ngValue]="room">{{room.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group col-5">
+      <label for="layout">Layout</label>
+      <select class="form-control" id="layout"  formControlName="bookingLayout">
+        <option *ngFor="let layout of layouts" [ngValue]="layout">{{layoutEnum[layout]}}</option>
+      </select>
+    </div>
+
+    <div class="form-group col-2">
+      <label for="participants">Participants</label>
+      <input type="number" class="form-control" id="participants" formControlName="bookingParticipants">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-6">
+      <label for="layout">User
+      <select class="form-control" id="user" formControlName="bookingUser">
+        <option *ngFor="let user of users" [ngValue]="user">{{user.name}}</option>
+      </select>
+      </label>
+    </div>
+
+    <div class="form-group col-6">
+      <label for="title">Meeting title</label>
+      <input type="text" class="form-control" id="title" formControlName="bookingTitle">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-primary" (click)="submitBooking()">Save</button>
+    </div>
+  </div>
+</form>

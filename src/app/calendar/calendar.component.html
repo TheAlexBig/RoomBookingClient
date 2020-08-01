@@ -1,0 +1,44 @@
+<div *ngIf="action === 'view' || action == null">
+<h1>Room Booking System</h1>
+
+<h3>The following meetings are taking place on: <label>
+  <input type="date" [(ngModel)]="selectedDate" name="selectedDate" (change)="dateChanged()"/>
+</label></h3>
+
+<a class="btn btn-primary mt-3 mb-5 text-white" (click)="addBooking()">New Booking</a>
+
+<!-- only show this h3 if there are no bookings! -->
+<h3 class="mt-5" *ngIf="bookings && bookings.length === 0">There are no meetings currently scheduled for this date.</h3>
+<div *ngIf="!loadingData">{{message}}</div>
+
+<div class="row row-striped" *ngFor="let booking of bookings"> <!-- repeat this div for each booking -->
+  <div class="col-2 text-right">
+    <h1 class="display-4"><span class="badge badge-secondary">{{booking.date | date : 'dd' }}</span></h1>
+    <h2>{{booking.date | date : 'MMMM'}}</h2>
+  </div>
+  <div class="col-10">
+    <h3 class="text-uppercase"><strong>{{booking.title}}</strong></h3>
+    <ul class="list-inline">
+      <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i>{{booking.date | date : 'EEEE'}}</li>
+      <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i>{{booking.startTime}} - {{booking.endTime}}</li>
+      <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i>{{booking.room.name}}</li>
+    </ul>
+    <div class="row">
+      <div class="col-6">
+        <p class="mb-0">Booked by : {{booking.user.name}}</p>
+        <p class="mb-0">Room layout: {{layoutEnum[booking.layout]}}</p>
+        <p>Participants: {{booking.participants}}</p>
+      </div>
+      <div class="col-6">
+        <a class="btn btn-warning text-white" (click)="editBooking(booking.id)">Amend</a>
+        <a class="btn btn-danger text-white" (click)="deleteBooking(booking.id)">Cancel</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<p class="mt-5">The design of this page is taken from <a href="https://bootsnipp.com/snippets/VgzeR">https://bootsnipp.com/snippets/VgzeR</a></p>
+</div>
+
+<app-calendar-edit *ngIf="(action === 'edit' || action === 'add') && selectedBooking" [booking]="selectedBooking"></app-calendar-edit>
